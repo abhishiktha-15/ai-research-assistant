@@ -187,7 +187,7 @@ async def query_papers(request: QueryRequest):
         
         # Query the RAG pipeline
         pipeline = get_pipeline()
-        result = pipeline.query(request.question, top_k=request.top_k)
+        result = pipeline.query(request.question)
         
         return QueryResponse(
             answer=result['answer'],
