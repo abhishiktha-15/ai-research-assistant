@@ -306,6 +306,42 @@ body::before {
   font-style: italic;
 }
 
+/* Clear/Delete Buttons */
+.clear-chat-button,
+.clear-all-button {
+  background: rgba(244, 67, 54, 0.2);
+  border: 1px solid rgba(244, 67, 54, 0.4);
+  color: #ff6b6b;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.clear-chat-button:hover,
+.clear-all-button:hover {
+  background: rgba(244, 67, 54, 0.3);
+  transform: translateY(-2px);
+}
+
+.delete-paper-button {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #ff6b6b;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.delete-paper-button:hover {
+  background: rgba(244, 67, 54, 0.3);
+  transform: scale(1.1);
+}
+
 /* Input Form */
 .input-form {
   display: flex;

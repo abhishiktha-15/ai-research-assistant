@@ -230,6 +230,60 @@ async def ingest_all_papers():
         raise HTTPException(status_code=500, detail=f"Ingestion failed: {str(e)}")
 
 
+@app.delete("/api/papers/{filename}")
+async def delete_paper(filename: str):
+    """
+    Delete a specific paper by filename
+    """
+    try:
+        file_path = papers_dir / filename
+        
+        if not file_path.exists():
+            raise HTTPException(status_code=404, detail=f"Paper '{filename}' not found")
+        
+        # Delete the file
+        file_path.unlink()
+        
+        return {
+            "status": "success",
+            "message": f"Paper '{filename}' deleted successfully"
+        }
+    
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")
+
+
+@app.delete("/api/papers")
+async def delete_all_papers():
+    """
+    Delete all papers from data/papers/
+    """
+    try:
+        pdf_files = list(papers_dir.glob('*.pdf'))
+        
+        if not pdf_files:
+            return {
+                "status": "warning",
+                "message": "No papers to delete",
+                "deleted_count": 0
+            }
+        
+        # Delete all PDF files
+        for pdf in pdf_files:
+            pdf.unlink()
+        
+        return {
+            "status": "success",
+            "message": f"Deleted {len(pdf_files)} paper(s)",
+            "deleted_count": len(pdf_files)
+        }
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Delete failed: {str(e)}")
+
+
 # Run the API server
 if __name__ == "__main__":
     print("\n" + "="*60)

@@ -81,4 +81,36 @@ export const api = {
 
         return response.json();
     },
+
+    /**
+     * Delete a specific paper
+     */
+    async deletePaper(filename) {
+        const response = await fetch(`${API_URL}/api/papers/${encodeURIComponent(filename)}`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Delete failed');
+        }
+
+        return response.json();
+    },
+
+    /**
+     * Delete all papers
+     */
+    async deleteAllPapers() {
+        const response = await fetch(`${API_URL}/api/papers`, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Delete failed');
+        }
+
+        return response.json();
+    },
 };

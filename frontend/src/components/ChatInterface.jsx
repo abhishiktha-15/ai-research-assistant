@@ -68,9 +68,25 @@ export default function ChatInterface() {
         setQuestion(q);
     };
 
+    const handleClearChat = () => {
+        if (!confirm('Are you sure you want to clear the chat history?')) return;
+        setMessages([]);
+    };
+
     return (
         <div className="chat-container glass-card">
-            <h2>💬 Ask Questions</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <h2>💬 Ask Questions</h2>
+                {messages.length > 0 && (
+                    <button
+                        onClick={handleClearChat}
+                        className="clear-chat-button"
+                        title="Clear chat history"
+                    >
+                        🗑️ Clear Chat
+                    </button>
+                )}
+            </div>
 
             {messages.length === 0 ? (
                 <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>

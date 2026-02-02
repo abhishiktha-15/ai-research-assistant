@@ -73,6 +73,30 @@ export default function UploadPapers({ onUploadSuccess }) {
         return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
     };
 
+    const handleDeletePaper = async (filename) => {
+        if (!confirm(`Are you sure you want to delete "${filename}"?`)) return;
+
+        try {
+            await api.deletePaper(filename);
+            setStatus({ type: 'success', message: `"${filename}" deleted successfully` });
+            await loadPapers();
+        } catch (error) {
+            setStatus({ type: 'error', message: error.message });
+        }
+    };
+
+    const handleClearAll = async () => {
+        if (!confirm('Are you sure you want to delete ALL papers? This cannot be undone.')) return;
+
+        try {
+            const result = await api.deleteAllPapers();
+            setStatus({ type: 'success', message: result.message });
+            await loadPapers();
+        } catch (error) {
+            setStatus({ type: 'error', message: error.message });
+        }
+    };
+
     return (
         <div className="upload-section glass-card">
             <h2>📄 Upload Research Papers</h2>
@@ -107,13 +131,31 @@ export default function UploadPapers({ onUploadSuccess }) {
 
             {papers.length > 0 && (
                 <div className="papers-list">
-                    <h3>📚 Uploaded Papers ({papers.length})</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                        <h3>📚 Uploaded Papers ({papers.length})</h3>
+                        <button
+                            onClick={handleClearAll}
+                            className="clear-all-button"
+                            title="Delete all papers"
+                        >
+                            🗑️ Clear All
+                        </button>
+                    </div>
                     {papers.map((paper, index) => (
                         <div key={index} className="paper-item">
-                            <span>📄 {paper.filename}</span>
-                            <span style={{ color: 'var(--text-secondary)' }}>
-                                {formatFileSize(paper.size_bytes)}
-                            </span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
+                                <span>📄 {paper.filename}</span>
+                                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                                    ({formatFileSize(paper.size_bytes)})
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => handleDeletePaper(paper.filename)}
+                                className="delete-paper-button"
+                                title={`Delete ${paper.filename}`}
+                            >
+                                🗑️
+                            </button>
                         </div>
                     ))}
                 </div>
