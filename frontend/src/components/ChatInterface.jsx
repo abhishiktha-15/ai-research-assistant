@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { api } from '../services/api';
+import ReactMarkdown from 'react-markdown';
 
 export default function ChatInterface() {
     const [messages, setMessages] = useState([]);
@@ -115,7 +116,9 @@ export default function ChatInterface() {
                             ) : (
                                 <div className="message-answer">
                                     <strong>🤖 Assistant:</strong>
-                                    <p style={{ marginTop: '0.5rem' }}>{msg.content}</p>
+                                    <div className="markdown-content" style={{ marginTop: '0.5rem' }}>
+                                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                                    </div>
 
                                     {msg.sources && msg.sources.length > 0 && (
                                         <div className="sources">
