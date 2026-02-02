@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '../services/api';
 
 export default function UploadPapers({ onUploadSuccess }) {
@@ -8,7 +8,7 @@ export default function UploadPapers({ onUploadSuccess }) {
     const [status, setStatus] = useState(null);
 
     // Load papers on component mount
-    useState(() => {
+    useEffect(() => {
         loadPapers();
     }, []);
 
