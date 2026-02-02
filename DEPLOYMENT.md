@@ -53,7 +53,7 @@
 2. Click "New +" → "Web Service"
 3. Connect your GitHub repository
 4. Configure:
-   - **Name**: `rag2-backend`
+   - **Name**: `ai-research-assistant-backend`
    - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt && pip install -r requirements-api.txt`
    - **Start Command**: `uvicorn app:app --host 0.0.0.0 --port $PORT`
